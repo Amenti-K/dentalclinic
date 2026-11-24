@@ -6,8 +6,8 @@ import {
   About,
   Services,
   WhyChooseUs,
-  Doctors,
-  Testimonials,
+  CareJourney,
+  VisitSteps,
   Gallery,
   FAQ,
   Contact,
@@ -24,9 +24,9 @@ export default function Home() {
         <About />
         <Services />
         <WhyChooseUs />
-        <Doctors />
+        <CareJourney />
         <Booking />
-        <Testimonials />
+        <VisitSteps />
         <Gallery />
         <FAQ />
         <Contact />

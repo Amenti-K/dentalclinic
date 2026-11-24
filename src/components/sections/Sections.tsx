@@ -1,13 +1,13 @@
 "use client";
 
 import Image from "next/image";
-import { FormEvent, useState } from "react";
+import { useState } from "react";
 import { motion } from "framer-motion";
 import {
-  AlignCenter, Baby, Brush, Check, ChevronDown, Heart, Mail, MapPin,
-  Phone, ScanLine, ShieldCheck, Smile, Sparkles, Star, ArrowRight, Clock
+  AlignCenter, Baby, Brush, Check, ChevronDown, Heart, MapPin,
+  Phone, ScanLine, ShieldCheck, Smile, Sparkles, ArrowRight, Clock
 } from "lucide-react";
-import { clinicData, IconName } from "@/data/data";
+import { clinicData } from "@/data/data";
 
 const reveal = { initial: { opacity: 0, y: 28 }, whileInView: { opacity: 1, y: 0 }, viewport: { once: true, margin: "-80px" }, transition: { duration: 0.65 } };
 
@@ -55,7 +55,7 @@ export function About() {
           <Heading eyebrow={clinicData.about.eyebrow} title={clinicData.about.heading} />
           <p className="mt-7 text-base leading-8 text-[var(--color-muted)]">{clinicData.about.description}</p>
           <div className="mt-8 space-y-4">{clinicData.about.reasons.map((reason) => <div key={reason} className="flex items-center gap-3 text-sm font-semibold"><span className="flex h-7 w-7 items-center justify-center rounded-full bg-[var(--color-secondary)] text-[var(--color-primary)]"><Check size={15} /></span>{reason}</div>)}</div>
-          <a href="#team" className="mt-9 inline-flex items-center gap-3 border-b border-[var(--color-primary)] pb-2 text-sm font-bold text-[var(--color-primary)]">Meet our team <ArrowRight size={16} /></a>
+          <a href="#team" className="mt-9 inline-flex items-center gap-3 border-b border-[var(--color-primary)] pb-2 text-sm font-bold text-[var(--color-primary)]">Explore care options <ArrowRight size={16} /></a>
         </motion.div>
       </div>
     </section>
@@ -69,7 +69,7 @@ export function Services() {
         <Heading eyebrow="Our treatments" title="Care for every kind of smile." />
         <div className="mt-14 grid gap-px overflow-hidden rounded-[20px] border border-[var(--color-border)] bg-[var(--color-border)] sm:grid-cols-2 lg:grid-cols-4">
           {clinicData.services.map((service, i) => {
-            const Icon = icons[service.icon as IconName];
+            const Icon = icons[service.icon];
             return (
               <motion.article key={service.name} {...reveal} transition={{ duration: 0.5, delay: i * 0.06 }} className="group min-h-[275px] bg-[var(--color-surface)] p-7 transition-colors hover:bg-[var(--color-primary)] md:p-8">
                 <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[var(--color-secondary)] text-[var(--color-primary)] transition-transform group-hover:scale-110"><Icon size={22} /></div>
@@ -106,21 +106,17 @@ export function WhyChooseUs() {
   );
 }
 
-export function Doctors() {
+export function CareJourney() {
   return (
     <section id="team" className="bg-[var(--color-surface)] py-24 md:py-32">
       <div className="mx-auto max-w-[1280px] px-5 md:px-8">
-        <Heading eyebrow="Our dental team" title="Expert hands. A personal approach." />
-        <div className="mt-14 grid gap-7 md:grid-cols-3">
-          {clinicData.doctors.map((doctor, i) => (
-            <motion.article key={doctor.name} {...reveal} transition={{ duration: 0.6, delay: i * 0.1 }}>
-              <div className="relative h-[420px] overflow-hidden rounded-[18px] bg-[var(--color-secondary)]">
-                <Image src={doctor.image} alt={doctor.name} fill sizes="(max-width: 768px) 100vw, 33vw" className="object-cover object-top transition-transform duration-700 hover:scale-[1.03]" />
-              </div>
-              <p className="mt-5 text-xs font-bold uppercase tracking-[.15em] text-[var(--color-accent)]">{doctor.title}</p>
-              <h3 className="mt-2 font-serif text-2xl text-[var(--color-primary)]">{doctor.name}</h3>
-              <p className="mt-1 text-sm font-semibold text-[var(--color-muted)]">{doctor.specialization}</p>
-              <p className="mt-3 text-sm leading-6 text-[var(--color-muted)]">{doctor.bio}</p>
+        <Heading eyebrow="Care at Shine" title="A good place to start." />
+        <div className="mt-14 grid gap-5 md:grid-cols-3">
+          {clinicData.careSteps.map((step, i) => (
+            <motion.article key={step.title} {...reveal} transition={{ duration: 0.6, delay: i * 0.1 }} className="rounded-[18px] border border-[var(--color-border)] bg-[var(--color-background)] p-7 md:p-8">
+              <span className="flex h-12 w-12 items-center justify-center rounded-full bg-[var(--color-secondary)] font-serif text-xl text-[var(--color-primary)]">0{i + 1}</span>
+              <h3 className="mt-7 font-serif text-2xl text-[var(--color-primary)]">{step.title}</h3>
+              <p className="mt-3 text-sm leading-6 text-[var(--color-muted)]">{step.text}</p>
             </motion.article>
           ))}
         </div>
@@ -130,20 +126,6 @@ export function Doctors() {
 }
 
 export function Booking() {
-  const [submitted, setSubmitted] = useState(false);
-  const [error, setError] = useState("");
-  const submit = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const form = new FormData(event.currentTarget);
-    if (!form.get("name") || !form.get("phone") || !form.get("email") || !form.get("service") || !form.get("date") || !form.get("time")) {
-      setError("Please complete all required fields.");
-      return;
-    }
-    setError("");
-    setSubmitted(true);
-  };
-  const inputClass = "h-12 w-full rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] px-4 text-sm outline-none transition focus:border-[var(--color-primary)]";
-
   return (
     <section id="booking" className="bg-[var(--color-secondary)] py-24 md:py-32">
       <div className="mx-auto grid max-w-[1280px] gap-12 px-5 md:px-8 lg:grid-cols-[.72fr_1.28fr]">
@@ -151,54 +133,31 @@ export function Booking() {
           <p className="mb-4 text-xs font-bold uppercase tracking-[.22em] text-[var(--color-primary)]">{clinicData.booking.eyebrow}</p>
           <h2 className="font-serif text-4xl leading-tight text-[var(--color-primary)] md:text-[3.25rem]">{clinicData.booking.heading}</h2>
           <p className="mt-6 max-w-md leading-7 text-[var(--color-muted)]">{clinicData.booking.description}</p>
-          <div className="mt-8 space-y-4 text-sm"><div className="flex items-center gap-3"><Phone size={17} />{clinicData.contact.phone}</div><div className="flex items-center gap-3"><Mail size={17} />{clinicData.contact.email}</div></div>
+          <a href={clinicData.contact.phoneHref} className="mt-8 inline-flex items-center gap-3 text-sm font-semibold text-[var(--color-primary)]"><Phone size={17} />{clinicData.contact.phone}</a>
         </motion.div>
-        <motion.div {...reveal} className="rounded-[20px] bg-[var(--color-surface)] p-6 shadow-[0_20px_60px_rgba(24,49,46,.08)] md:p-9">
-          {submitted ? (
-            <div className="flex min-h-[420px] flex-col items-center justify-center text-center">
-              <span className="flex h-16 w-16 items-center justify-center rounded-full bg-[var(--color-secondary)] text-[var(--color-primary)]"><Check size={28} /></span>
-              <h3 className="mt-6 font-serif text-3xl text-[var(--color-primary)]">{clinicData.booking.successTitle}</h3>
-              <p className="mt-4 max-w-md text-sm leading-7 text-[var(--color-muted)]">{clinicData.booking.successText}</p>
-              <button type="button" onClick={() => setSubmitted(false)} className="mt-7 rounded-full border border-[var(--color-primary)] px-6 py-3 text-sm font-semibold text-[var(--color-primary)]">Send another request</button>
-            </div>
-          ) : (
-            <form onSubmit={submit} noValidate>
-              <div className="grid gap-5 sm:grid-cols-2">
-                <label className="text-xs font-bold text-[var(--color-primary)]">Patient name *<input name="name" className={`${inputClass} mt-2`} placeholder="Your full name" /></label>
-                <label className="text-xs font-bold text-[var(--color-primary)]">Phone number *<input name="phone" type="tel" className={`${inputClass} mt-2`} placeholder="(555) 000-0000" /></label>
-                <label className="text-xs font-bold text-[var(--color-primary)] sm:col-span-2">Email address *<input name="email" type="email" className={`${inputClass} mt-2`} placeholder="you@example.com" /></label>
-                <label className="text-xs font-bold text-[var(--color-primary)]">Preferred service *<select name="service" defaultValue="" className={`${inputClass} mt-2`}><option value="" disabled>Select a service</option>{clinicData.services.map((service) => <option key={service.name}>{service.name}</option>)}</select></label>
-                <label className="text-xs font-bold text-[var(--color-primary)]">Preferred date *<input name="date" type="date" className={`${inputClass} mt-2`} /></label>
-                <label className="text-xs font-bold text-[var(--color-primary)] sm:col-span-2">Preferred time *<select name="time" defaultValue="" className={`${inputClass} mt-2`}><option value="" disabled>Select a time</option><option>Morning</option><option>Afternoon</option><option>Evening</option></select></label>
-                <label className="text-xs font-bold text-[var(--color-primary)] sm:col-span-2">Additional message<textarea name="message" rows={4} className="mt-2 w-full rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-4 text-sm outline-none focus:border-[var(--color-primary)]" placeholder="Tell us how we can help" /></label>
-              </div>
-              {error && <p role="alert" className="mt-4 text-sm font-semibold text-red-700">{error}</p>}
-              <button type="submit" className="mt-6 flex h-13 w-full items-center justify-center gap-3 rounded-full bg-[var(--color-primary)] px-6 text-sm font-semibold text-white transition-transform hover:-translate-y-0.5">Send demo request <ArrowRight size={16} /></button>
-            </form>
-          )}
+        <motion.div {...reveal} className="flex min-h-[320px] flex-col items-start justify-center rounded-[20px] bg-[var(--color-surface)] p-7 shadow-[0_20px_60px_rgba(24,49,46,.08)] md:p-10">
+          <span className="flex h-14 w-14 items-center justify-center rounded-full bg-[var(--color-secondary)] text-[var(--color-primary)]"><Phone size={24} /></span>
+          <h3 className="mt-6 font-serif text-3xl text-[var(--color-primary)]">Call the clinic</h3>
+          <p className="mt-3 max-w-md text-sm leading-7 text-[var(--color-muted)]">Speak with Shine directly to confirm current availability, services, and appointment details.</p>
+          <a href={clinicData.contact.phoneHref} className="mt-7 inline-flex h-12 items-center justify-center gap-3 rounded-full bg-[var(--color-primary)] px-6 text-sm font-semibold text-white">{clinicData.booking.callToAction}<ArrowRight size={16} /></a>
         </motion.div>
       </div>
     </section>
   );
 }
 
-export function Testimonials() {
+export function VisitSteps() {
   return (
-    <section id="reviews" className="bg-[var(--color-surface)] py-24 md:py-32">
+    <section id="visit" className="bg-[var(--color-surface)] py-24 md:py-32">
       <div className="mx-auto max-w-[1280px] px-5 md:px-8">
-        <Heading eyebrow="Patient stories" title="Kind words from our patients." center />
+        <Heading eyebrow="Plan your visit" title="A few helpful things to check." center />
         <div className="mt-14 grid gap-6 lg:grid-cols-3">
-          {clinicData.testimonials.map((testimonial, i) => (
-            <motion.blockquote key={testimonial.name} {...reveal} transition={{ duration: 0.6, delay: i * 0.1 }} className="rounded-[18px] border border-[var(--color-border)] p-7 md:p-8">
-              <div className="flex gap-1 text-[var(--color-accent)]" aria-label={`${testimonial.rating} out of 5 stars`}>
-                {Array.from({ length: testimonial.rating }).map((_, index) => <Star key={index} size={15} fill="currentColor" />)}
-              </div>
-              <p className="mt-6 font-serif text-xl leading-8 text-[var(--color-primary)]">“{testimonial.quote}”</p>
-              <div className="mt-8 flex items-center gap-4 border-t border-[var(--color-border)] pt-5">
-                <div className="relative h-11 w-11 overflow-hidden rounded-full"><Image src={testimonial.image} alt="" fill sizes="44px" className="object-cover" /></div>
-                <div><cite className="block text-sm font-bold not-italic">{testimonial.name}</cite><span className="text-xs text-[var(--color-muted)]">{testimonial.treatment}</span></div>
-              </div>
-            </motion.blockquote>
+          {clinicData.visitSteps.map((step, i) => (
+            <motion.article key={step.title} {...reveal} transition={{ duration: 0.6, delay: i * 0.1 }} className="rounded-[18px] border border-[var(--color-border)] p-7 md:p-8">
+              <span className="flex h-11 w-11 items-center justify-center rounded-full bg-[var(--color-secondary)] font-serif text-lg text-[var(--color-primary)]">0{i + 1}</span>
+              <h3 className="mt-6 font-serif text-xl text-[var(--color-primary)]">{step.title}</h3>
+              <p className="mt-4 text-sm leading-7 text-[var(--color-muted)]">{step.text}</p>
+            </motion.article>
           ))}
         </div>
       </div>
@@ -210,7 +169,7 @@ export function Gallery() {
   return (
     <section className="bg-[var(--color-background)] py-24 md:py-32">
       <div className="mx-auto max-w-[1280px] px-5 md:px-8">
-        <Heading eyebrow="Inside Luméra" title="A calmer kind of dental experience." />
+        <Heading eyebrow="Dental care" title="A look at the care you can explore." />
         <div className="mt-14 grid auto-rows-[260px] gap-5 md:grid-cols-2 lg:grid-cols-3">
           {clinicData.gallery.map((item, i) => (
             <motion.figure key={item.image} {...reveal} transition={{ duration: 0.6, delay: i * 0.1 }} className={`group relative overflow-hidden rounded-[18px] ${item.span === "wide" ? "md:col-span-2" : ""}`}>
@@ -219,7 +178,7 @@ export function Gallery() {
             </motion.figure>
           ))}
           <motion.figure {...reveal} className="relative overflow-hidden rounded-[18px] bg-[var(--color-primary)] p-8 text-white">
-            <div className="flex h-full flex-col justify-between"><p className="text-xs font-bold uppercase tracking-[.18em] text-[var(--color-accent)]">The Luméra promise</p><p className="font-serif text-3xl leading-tight">Comfortable care, beautifully considered.</p></div>
+            <div className="flex h-full flex-col justify-between"><p className="text-xs font-bold uppercase tracking-[.18em] text-[var(--color-accent)]">Shine Speciality Dental Clinic</p><p className="font-serif text-3xl leading-tight">Illustrative images. Call Shine to confirm current services and details.</p></div>
           </motion.figure>
         </div>
       </div>
@@ -253,20 +212,22 @@ export function Contact() {
     <section id="contact" className="bg-[var(--color-background)] py-24 md:py-32">
       <div className="mx-auto grid max-w-[1280px] overflow-hidden rounded-[20px] border border-[var(--color-border)] bg-[var(--color-surface)] px-5 md:grid-cols-2 md:px-0">
         <motion.div {...reveal} className="py-10 md:px-12 md:py-14">
-          <Heading eyebrow="Visit Luméra" title="We’d love to welcome you." />
+          <Heading eyebrow="Visit Shine" title="We’d love to welcome you." />
           <div className="mt-8 grid gap-6 text-sm sm:grid-cols-2">
             <div><MapPin className="mb-3 text-[var(--color-accent)]" size={20} /><p className="font-bold">Address</p><p className="mt-2 leading-6 text-[var(--color-muted)]">{clinicData.contact.address}<br />{clinicData.contact.city}</p></div>
-            <div><Phone className="mb-3 text-[var(--color-accent)]" size={20} /><p className="font-bold">Call us</p><a href={clinicData.contact.phoneHref} className="mt-2 block text-[var(--color-muted)]">{clinicData.contact.phone}</a><a href={`mailto:${clinicData.contact.email}`} className="mt-1 block text-[var(--color-muted)]">{clinicData.contact.email}</a></div>
-            <div className="sm:col-span-2"><Clock className="mb-3 text-[var(--color-accent)]" size={20} /><p className="font-bold">Opening hours</p><div className="mt-2 space-y-1 text-[var(--color-muted)]">{clinicData.contact.hours.map((hour) => <p key={hour}>{hour}</p>)}</div></div>
+            <div><Phone className="mb-3 text-[var(--color-accent)]" size={20} /><p className="font-bold">Call us</p><a href={clinicData.contact.phoneHref} className="mt-2 block text-[var(--color-muted)]">{clinicData.contact.phone}</a></div>
+            <div className="sm:col-span-2"><Clock className="mb-3 text-[var(--color-accent)]" size={20} /><p className="font-bold">Opening hours</p><p className="mt-2 text-[var(--color-muted)]">Call to confirm current opening hours.</p></div>
           </div>
-          <a href="#booking" className="mt-9 inline-flex h-12 items-center gap-3 rounded-full bg-[var(--color-primary)] px-6 text-sm font-semibold text-white">Plan your visit <ArrowRight size={16} /></a>
+          <a href={clinicData.contact.mapHref} target="_blank" rel="noreferrer" className="mt-9 inline-flex h-12 items-center gap-3 rounded-full bg-[var(--color-primary)] px-6 text-sm font-semibold text-white">Open in Google Maps <ArrowRight size={16} /></a>
         </motion.div>
-        <motion.div {...reveal} className="relative min-h-[380px] bg-[var(--color-secondary)] md:min-h-[520px]">
-          <div className="absolute inset-0 opacity-40" style={{ backgroundImage: "linear-gradient(var(--color-primary) 1px, transparent 1px), linear-gradient(90deg, var(--color-primary) 1px, transparent 1px)", backgroundSize: "42px 42px" }} />
-          <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-center">
-            <span className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-[var(--color-primary)] text-white shadow-xl"><MapPin size={26} /></span>
-            <div className="mt-4 rounded-xl bg-[var(--color-surface)] px-5 py-3 text-sm font-bold shadow-lg">{clinicData.brand.name} Dental Studio</div>
-          </div>
+        <motion.div {...reveal} className="relative min-h-[380px] overflow-hidden bg-[var(--color-secondary)] md:min-h-[520px]">
+          <iframe
+            title="Map search for Shine Speciality Dental Clinic in Addis Ababa"
+            src="https://www.google.com/maps?q=Shine+Speciality+Dental+Clinic+Addis+Ababa&output=embed"
+            className="absolute inset-0 h-full w-full border-0"
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+          />
         </motion.div>
       </div>
     </section>

@@ -19,7 +19,7 @@ export default function Hero() {
           </h1>
           <p className="mt-7 max-w-[530px] text-lg leading-8 text-[var(--color-muted)]">{clinicData.hero.description}</p>
           <div className="mt-9 flex flex-col gap-3 sm:flex-row">
-            <motion.a whileHover={{ y: -3 }} href="#booking" className="flex h-14 items-center justify-center gap-3 rounded-full bg-[var(--color-primary)] px-7 text-sm font-semibold text-white shadow-[0_12px_30px_rgba(22,76,70,.18)]">
+            <motion.a whileHover={{ y: -3 }} href={clinicData.contact.phoneHref} className="flex h-14 items-center justify-center gap-3 rounded-full bg-[var(--color-primary)] px-7 text-sm font-semibold text-white shadow-[0_12px_30px_rgba(22,76,70,.18)]">
               {clinicData.hero.primaryCta}<ArrowRight size={17} />
             </motion.a>
             <motion.a whileHover={{ y: -3 }} href="#services" className="flex h-14 items-center justify-center gap-3 rounded-full border border-[var(--color-primary)]/25 px-7 text-sm font-semibold text-[var(--color-primary)]">
@@ -33,9 +33,9 @@ export default function Hero() {
             <Image src={clinicData.hero.image} alt={clinicData.hero.imageAlt} fill priority sizes="(max-width: 1024px) 94vw, 50vw" className="object-cover" />
           </div>
           <div className="absolute bottom-8 left-0 rounded-2xl border border-white/70 bg-[var(--color-surface)]/95 p-5 shadow-[0_16px_40px_rgba(24,49,46,.12)] backdrop-blur sm:left-[-20px] sm:p-6">
-            <div className="font-serif text-3xl text-[var(--color-primary)]">18</div><div className="mt-1 text-xs font-bold uppercase tracking-[.15em] text-[var(--color-muted)]">Years of care</div>
+            <div className="font-serif text-3xl text-[var(--color-primary)]">Shine</div><div className="mt-1 text-xs font-bold uppercase tracking-[.15em] text-[var(--color-muted)]">Speciality dental clinic</div>
           </div>
-          <div className="absolute right-[-8px] top-16 hidden rounded-full bg-[var(--color-accent)] px-5 py-3 text-xs font-bold uppercase tracking-[.12em] text-white sm:block">Care with intention</div>
+          <div className="absolute right-[-8px] top-16 hidden rounded-full bg-[var(--color-accent)] px-5 py-3 text-xs font-bold uppercase tracking-[.12em] text-white sm:block">Addis Ababa, Ethiopia</div>
         </motion.div>
       </div>
     </section>
